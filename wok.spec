@@ -4,7 +4,7 @@
 #
 Name     : wok
 Version  : 2.5.0
-Release  : 1
+Release  : 2
 URL      : https://github.com/kimchi-project/wok/archive/2.5.0.tar.gz
 Source0  : https://github.com/kimchi-project/wok/archive/2.5.0.tar.gz
 Summary  : No detailed summary available
@@ -115,12 +115,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1540749781
+export SOURCE_DATE_EPOCH=1540763620
 %autogen --disable-static
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1540749781
+export SOURCE_DATE_EPOCH=1540763620
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/wok
 cp COPYING.ASL2 %{buildroot}/usr/share/package-licenses/wok/COPYING.ASL2
@@ -145,12 +145,13 @@ cp ui/libs/moment/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_mo
 cp ui/libs/typeahead/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_typeahead_LICENSE
 %make_install
 %find_lang wok
+## install_append content
+rm -rf %{buildroot}/var
+## install_append end
 
 %files
 %defattr(-,root,root,-)
 /usr/lib/firewalld/services/wokd.xml
-/var/log/wok/wok-access.log
-/var/log/wok/wok-error.log
 
 %files bin
 %defattr(-,root,root,-)
