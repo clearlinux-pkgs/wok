@@ -4,10 +4,10 @@
 #
 Name     : wok
 Version  : 2.5.0
-Release  : 7
+Release  : 8
 URL      : https://github.com/kimchi-project/wok/archive/2.5.0.tar.gz
 Source0  : https://github.com/kimchi-project/wok/archive/2.5.0.tar.gz
-Summary  : No detailed summary available
+Summary  : Static site generator
 Group    : Development/Tools
 License  : Apache-2.0 LGPL-2.1 MIT
 Requires: wok-bin = %{version}-%{release}
@@ -42,7 +42,6 @@ Summary: bin components for the wok package.
 Group: Binaries
 Requires: wok-data = %{version}-%{release}
 Requires: wok-license = %{version}-%{release}
-Requires: wok-man = %{version}-%{release}
 Requires: wok-services = %{version}-%{release}
 
 %description bin
@@ -109,40 +108,47 @@ services components for the wok package.
 
 %prep
 %setup -q -n wok-2.5.0
+cd %{_builddir}/wok-2.5.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1540763620
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1582902434
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %autogen --disable-static
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1540763620
+export SOURCE_DATE_EPOCH=1582902434
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/wok
-cp COPYING.ASL2 %{buildroot}/usr/share/package-licenses/wok/COPYING.ASL2
-cp COPYING.LGPL %{buildroot}/usr/share/package-licenses/wok/COPYING.LGPL
-cp ui/css/src/vendor/bootstrap-sass/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_css_src_vendor_bootstrap-sass_LICENSE
-cp ui/css/src/vendor/compass-mixins/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_css_src_vendor_compass-mixins_LICENSE
-cp ui/libs/bootstrap-editable/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_bootstrap-editable_LICENSE
-cp ui/libs/bootstrap-select/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_bootstrap-select_LICENSE
-cp ui/libs/bootstrap-switch/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_bootstrap-switch_LICENSE
-cp ui/libs/bootstrap/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_bootstrap_LICENSE
-cp ui/libs/datatables/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_datatables_LICENSE
-cp ui/libs/datatables/js/plugins/ip-address/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_datatables_js_plugins_ip-address_LICENSE
-cp ui/libs/es5-shim/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_es5-shim_LICENSE
-cp ui/libs/jquery-bootgrid/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_jquery-bootgrid_LICENSE
-cp ui/libs/jquery-containsNC/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_jquery-containsNC_LICENSE
-cp ui/libs/jquery-i18n/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_jquery-i18n_LICENSE
-cp ui/libs/jquery-ui/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_jquery-ui_LICENSE
-cp ui/libs/jquery/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_jquery_LICENSE
-cp ui/libs/list-js/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_list-js_LICENSE
-cp ui/libs/lodash/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_lodash_LICENSE
-cp ui/libs/moment/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_moment_LICENSE
-cp ui/libs/typeahead/LICENSE %{buildroot}/usr/share/package-licenses/wok/ui_libs_typeahead_LICENSE
+cp %{_builddir}/wok-2.5.0/COPYING.ASL2 %{buildroot}/usr/share/package-licenses/wok/2b8b815229aa8a61e483fb4ba0588b8b6c491890
+cp %{_builddir}/wok-2.5.0/COPYING.LGPL %{buildroot}/usr/share/package-licenses/wok/01a6b4bf79aca9b556822601186afab86e8c4fbf
+cp %{_builddir}/wok-2.5.0/ui/css/src/vendor/bootstrap-sass/LICENSE %{buildroot}/usr/share/package-licenses/wok/8fccef886d86ab1d3a6e905bebc1f85b109adce1
+cp %{_builddir}/wok-2.5.0/ui/css/src/vendor/compass-mixins/LICENSE %{buildroot}/usr/share/package-licenses/wok/ace29ec23fc8d4874df3ec9b100c2e9b019ee405
+cp %{_builddir}/wok-2.5.0/ui/libs/bootstrap-editable/LICENSE %{buildroot}/usr/share/package-licenses/wok/18295b34250917c5a84c307af0189ee284726b04
+cp %{_builddir}/wok-2.5.0/ui/libs/bootstrap-select/LICENSE %{buildroot}/usr/share/package-licenses/wok/782a6fdcb65ef026fad6f3fccfb95f4e5e2e3df8
+cp %{_builddir}/wok-2.5.0/ui/libs/bootstrap-switch/LICENSE %{buildroot}/usr/share/package-licenses/wok/47bd79baad4cb286596ecd2404b998acbe148603
+cp %{_builddir}/wok-2.5.0/ui/libs/bootstrap/LICENSE %{buildroot}/usr/share/package-licenses/wok/8fccef886d86ab1d3a6e905bebc1f85b109adce1
+cp %{_builddir}/wok-2.5.0/ui/libs/datatables/LICENSE %{buildroot}/usr/share/package-licenses/wok/291fcbae87ed0bff064fad67327d9053ffa69d35
+cp %{_builddir}/wok-2.5.0/ui/libs/datatables/js/plugins/ip-address/LICENSE %{buildroot}/usr/share/package-licenses/wok/41633068f3d8543b7c81d4cbe54bb487f0975721
+cp %{_builddir}/wok-2.5.0/ui/libs/es5-shim/LICENSE %{buildroot}/usr/share/package-licenses/wok/4aaf69b5bec2041c517b23278b8d42cc3459097c
+cp %{_builddir}/wok-2.5.0/ui/libs/jquery-bootgrid/LICENSE %{buildroot}/usr/share/package-licenses/wok/962cd6cfb9839aa6c0c352d72cfd769e5eb90569
+cp %{_builddir}/wok-2.5.0/ui/libs/jquery-containsNC/LICENSE %{buildroot}/usr/share/package-licenses/wok/4e34c9024f2c4fa7979e63302a4ce19305e8b2a0
+cp %{_builddir}/wok-2.5.0/ui/libs/jquery-i18n/LICENSE %{buildroot}/usr/share/package-licenses/wok/e3b04aff937b7626f361b56a8f0b755f25838566
+cp %{_builddir}/wok-2.5.0/ui/libs/jquery-ui/LICENSE %{buildroot}/usr/share/package-licenses/wok/34f2462c2c504ed5df7b0446d0ab7d3383a76084
+cp %{_builddir}/wok-2.5.0/ui/libs/jquery/LICENSE %{buildroot}/usr/share/package-licenses/wok/fe61d5c58a4d3cb5b18f65f5a1305c38f700d32b
+cp %{_builddir}/wok-2.5.0/ui/libs/list-js/LICENSE %{buildroot}/usr/share/package-licenses/wok/6169a024803f43e60e87318f46932016b2687bf3
+cp %{_builddir}/wok-2.5.0/ui/libs/lodash/LICENSE %{buildroot}/usr/share/package-licenses/wok/ba10b61a1337be0f129504feaaca47dd48e61778
+cp %{_builddir}/wok-2.5.0/ui/libs/moment/LICENSE %{buildroot}/usr/share/package-licenses/wok/7f9ee3de6737e2e37f2936f432c5ad029c966a3c
+cp %{_builddir}/wok-2.5.0/ui/libs/typeahead/LICENSE %{buildroot}/usr/share/package-licenses/wok/fbb46d745a06b67d4b8d4a51d44ec6dbf55e0688
 %make_install
 %find_lang wok
 ## install_append content
@@ -289,26 +295,25 @@ rm -rf %{buildroot}/var
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/wok/COPYING.ASL2
-/usr/share/package-licenses/wok/COPYING.LGPL
-/usr/share/package-licenses/wok/ui_css_src_vendor_bootstrap-sass_LICENSE
-/usr/share/package-licenses/wok/ui_css_src_vendor_compass-mixins_LICENSE
-/usr/share/package-licenses/wok/ui_libs_bootstrap-editable_LICENSE
-/usr/share/package-licenses/wok/ui_libs_bootstrap-select_LICENSE
-/usr/share/package-licenses/wok/ui_libs_bootstrap-switch_LICENSE
-/usr/share/package-licenses/wok/ui_libs_bootstrap_LICENSE
-/usr/share/package-licenses/wok/ui_libs_datatables_LICENSE
-/usr/share/package-licenses/wok/ui_libs_datatables_js_plugins_ip-address_LICENSE
-/usr/share/package-licenses/wok/ui_libs_es5-shim_LICENSE
-/usr/share/package-licenses/wok/ui_libs_jquery-bootgrid_LICENSE
-/usr/share/package-licenses/wok/ui_libs_jquery-containsNC_LICENSE
-/usr/share/package-licenses/wok/ui_libs_jquery-i18n_LICENSE
-/usr/share/package-licenses/wok/ui_libs_jquery-ui_LICENSE
-/usr/share/package-licenses/wok/ui_libs_jquery_LICENSE
-/usr/share/package-licenses/wok/ui_libs_list-js_LICENSE
-/usr/share/package-licenses/wok/ui_libs_lodash_LICENSE
-/usr/share/package-licenses/wok/ui_libs_moment_LICENSE
-/usr/share/package-licenses/wok/ui_libs_typeahead_LICENSE
+/usr/share/package-licenses/wok/01a6b4bf79aca9b556822601186afab86e8c4fbf
+/usr/share/package-licenses/wok/18295b34250917c5a84c307af0189ee284726b04
+/usr/share/package-licenses/wok/291fcbae87ed0bff064fad67327d9053ffa69d35
+/usr/share/package-licenses/wok/2b8b815229aa8a61e483fb4ba0588b8b6c491890
+/usr/share/package-licenses/wok/34f2462c2c504ed5df7b0446d0ab7d3383a76084
+/usr/share/package-licenses/wok/41633068f3d8543b7c81d4cbe54bb487f0975721
+/usr/share/package-licenses/wok/47bd79baad4cb286596ecd2404b998acbe148603
+/usr/share/package-licenses/wok/4aaf69b5bec2041c517b23278b8d42cc3459097c
+/usr/share/package-licenses/wok/4e34c9024f2c4fa7979e63302a4ce19305e8b2a0
+/usr/share/package-licenses/wok/6169a024803f43e60e87318f46932016b2687bf3
+/usr/share/package-licenses/wok/782a6fdcb65ef026fad6f3fccfb95f4e5e2e3df8
+/usr/share/package-licenses/wok/7f9ee3de6737e2e37f2936f432c5ad029c966a3c
+/usr/share/package-licenses/wok/8fccef886d86ab1d3a6e905bebc1f85b109adce1
+/usr/share/package-licenses/wok/962cd6cfb9839aa6c0c352d72cfd769e5eb90569
+/usr/share/package-licenses/wok/ace29ec23fc8d4874df3ec9b100c2e9b019ee405
+/usr/share/package-licenses/wok/ba10b61a1337be0f129504feaaca47dd48e61778
+/usr/share/package-licenses/wok/e3b04aff937b7626f361b56a8f0b755f25838566
+/usr/share/package-licenses/wok/fbb46d745a06b67d4b8d4a51d44ec6dbf55e0688
+/usr/share/package-licenses/wok/fe61d5c58a4d3cb5b18f65f5a1305c38f700d32b
 
 %files man
 %defattr(0644,root,root,0755)
