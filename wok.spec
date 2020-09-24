@@ -4,7 +4,7 @@
 #
 Name     : wok
 Version  : 2.5.0
-Release  : 8
+Release  : 9
 URL      : https://github.com/kimchi-project/wok/archive/2.5.0.tar.gz
 Source0  : https://github.com/kimchi-project/wok/archive/2.5.0.tar.gz
 Summary  : Static site generator
